@@ -28,7 +28,7 @@
   },
   "sideEffects": false,
   "bin": {
-    "allswap-mcp": "./bin/allswap-mcp.mjs"
+    "allswap-mcp": "bin/allswap-mcp.mjs"
   },
   "main": "./src/server.mjs",
   "types": "./src/server.d.ts",
