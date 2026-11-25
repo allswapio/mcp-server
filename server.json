@@ -3,8 +3,8 @@
   "name": "io.github.allswapio/mcp-server",
   "title": "AllSwap",
   "description": "Read-only tools: AllSwap's public asset catalog, its official channels, and block-explorer links.",
-  "version": "1.0.1",
-  "websiteUrl": "https://allswap.io/docs",
+  "version": "1.0.2",
+  "websiteUrl": "https://allswap.io/docs/mcp",
   "repository": {
     "url": "https://github.com/allswapio/mcp-server",
     "source": "github"
@@ -20,7 +20,7 @@
     {
       "registryType": "npm",
       "identifier": "@allswapio/mcp-server",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"

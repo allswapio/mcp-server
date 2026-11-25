@@ -13,6 +13,8 @@ It cannot create orders, quote prices, move funds or sign anything, and it takes
 or credentials. All three tools carry the annotation `readOnlyHint: true`; only `list_supported_assets` has
 `openWorldHint: true`. No runtime dependencies; Node.js 22 or later.
 
+Documentation, with setup notes for Claude Desktop, Claude Code, Cursor and VS Code: <https://allswap.io/docs/mcp>.
+
 ## Use with an MCP client
 
 ```json
@@ -70,7 +72,7 @@ above. The image runs as a non-root user and needs outbound HTTPS only for `list
 | `limit` | integer | Optional, 1-200, default 25. A value outside that range uses the default. |
 
 Returns `{ observedAt, stale, totalAssets, matchedAssets, returnedAssets }`, where `returnedAssets` holds
-the catalog entries as the API returns them. A non-200 response, a redirect (redirects are not followed),
+the catalog entries as the API returns them. A non-2xx response, a redirect (redirects are not followed),
 a response body over 5 MiB, a network error or a timeout (8 s) returns `{ error }` with `isError: true`.
 
 ### `get_official_channels`
@@ -132,8 +134,9 @@ CAIP-2 id and `bip122:0007104ccda289427919efc39dc9e4d4` is the chain id that All
 - Methods: `initialize`, `ping`, `tools/list`, `tools/call`. Notifications (messages without `id`) get no
   reply. Any other method returns `-32601` (including `server/discover`); an unknown tool or a tool name that
   is not a string returns `-32602`; a message that is not a JSON-RPC 2.0 request, or whose `id` is not a
-  string, a number or null, returns `-32600` with `id: null`; a line that is not JSON returns `-32700`; an
-  unexpected failure while handling or answering a line returns `-32603`, and the server keeps running.
+  string, a number or null, returns `-32600`, with the request's `id` when that is a string, a number or null
+  and `id: null` otherwise; a line that is not JSON returns `-32700` with `id: null`; an unexpected failure
+  while handling or answering a line returns `-32603`, and the server keeps running.
 - Batches (JSON arrays) are not supported and return `-32600`.
 
 ## Use as a library

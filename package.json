@@ -1,12 +1,12 @@
 {
   "name": "@allswapio/mcp-server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "mcpName": "io.github.allswapio/mcp-server",
   "description": "Read-only Model Context Protocol (MCP) server over stdio with three tools: list AllSwap's public asset catalog, return AllSwap's official channels and company details, and build block-explorer links for transaction hashes.",
   "type": "module",
   "license": "MIT",
   "author": "Haohang Network Technology Co., Limited (AllSwap) <service@allswap.io>",
-  "homepage": "https://allswap.io/docs",
+  "homepage": "https://allswap.io/docs/mcp",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/allswapio/mcp-server.git"

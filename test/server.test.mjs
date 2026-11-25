@@ -88,6 +88,7 @@ test("server.json (MCP Registry metadata) matches package.json and the initializ
   const versions = {
     "package.json": pkg.version,
     "server.json version": serverJson.version,
+    "gemini-extension.json version": JSON.parse(readFileSync(new URL("../gemini-extension.json", import.meta.url), "utf8")).version,
     "server.json packages[0].version": npmPackage.version,
     "initialize serverInfo.version": init.result.serverInfo.version,
   };

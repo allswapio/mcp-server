@@ -1,0 +1,13 @@
+{
+  "name": "allswap",
+  "version": "1.0.2",
+  "description": "Read-only tools: AllSwap's public asset catalog, its official channels, and block-explorer links.",
+  "mcpServers": {
+    "allswap": {
+      "command": "node",
+      "args": [
+        "${extensionPath}/bin/allswap-mcp.mjs"
+      ]
+    }
+  }
+}

@@ -5,7 +5,7 @@
 // tests compare them with package.json and server.json through the initialize
 // response, so a release that bumps one without the others fails the tests.
 const PACKAGE_NAME = "@allswapio/mcp-server";
-const PACKAGE_VERSION = "1.0.1";
+const PACKAGE_VERSION = "1.0.2";
 
 const SERVER_INFO = Object.freeze({
   name: PACKAGE_NAME,

@@ -4,6 +4,22 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.0.2] - 2026-11-26
+
+No change to the tools, the protocol handling or the runtime requirements.
+
+### Changed
+
+- `homepage` (npm) and `websiteUrl` (MCP Registry) point to the documentation page
+  <https://allswap.io/docs/mcp>; the README links to it.
+- README: the description of the `id` in `-32600` replies follows the code (the request's `id` is echoed when
+  it is a string, a number or null).
+
+### Added
+
+- Repository files for directories and clients, not in the npm package: `glama.json`,
+  `gemini-extension.json`.
+
 ## [1.0.1] - 2026-11-25
 
 No change to the tools, the protocol handling or the runtime requirements.
@@ -34,5 +50,6 @@ First public release.
 - `ALLSWAP_API_ORIGIN` / `apiOrigin` must be an `http:` or `https:` origin.
 - Requires Node.js 22 or later.
 
+[1.0.2]: https://github.com/allswapio/mcp-server/releases/tag/v1.0.2
 [1.0.1]: https://github.com/allswapio/mcp-server/releases/tag/v1.0.1
 [1.0.0]: https://github.com/allswapio/mcp-server/releases/tag/v1.0.0
