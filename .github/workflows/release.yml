@@ -56,10 +56,10 @@ jobs:
       # purpose; the download below is verified against this exact tag.
       MCP_PUBLISHER_VERSION: v1.8.16
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           # Trusted publishing needs npm >= 11.5.1 and Node >= 22.14.0; Node 24 ships a compatible npm.
           node-version: "24"
@@ -120,7 +120,7 @@ jobs:
           name="$(node -p 'require("./package.json").name')"
           version="$(node -p 'require("./package.json").version')"
           expected="$(node -p 'require("./server.json").name')"
-          for attempt in $(seq 1 30); do
+          for attempt in $(seq 1 120); do
             actual="$(npm view "${name}@${version}" mcpName 2>/dev/null || true)"
             if [ "${actual}" = "${expected}" ]; then
               echo "npm serves ${name}@${version} with mcpName ${actual}."

@@ -92,6 +92,15 @@ test("server.json (MCP Registry metadata) matches package.json and the initializ
     "server.json packages[0].version": npmPackage.version,
     "initialize serverInfo.version": init.result.serverInfo.version,
   };
+  for (const file of [".mcp.json", "mcp.json"]) {
+    const config = JSON.parse(readFileSync(new URL(`../${file}`, import.meta.url), "utf8"));
+    versions[file] = config.mcpServers.allswap.args.at(-1).split("@").at(-1);
+  }
+  versions["plugin.json"] = JSON.parse(readFileSync(new URL("../plugin.json", import.meta.url), "utf8")).version;
+  const skill = readFileSync(new URL("../skills/allswap-mcp/SKILL.md", import.meta.url), "utf8");
+  const pinned = [...skill.matchAll(/@allswapio\/mcp-server[@ ](\d+\.\d+\.\d+)/g)].map((match) => match[1]);
+  assert.equal(pinned.length, 3);
+  pinned.forEach((version, index) => { versions[`SKILL.md mention ${index + 1}`] = version; });
   assert.equal(new Set(Object.values(versions)).size, 1, JSON.stringify(versions));
   assert.match(pkg.version, /^\d+\.\d+\.\d+$/);
 
