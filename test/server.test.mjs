@@ -66,6 +66,38 @@ test("initialize reports the package name and version from package.json", async 
   }
 });
 
+test("server.json (MCP Registry metadata) matches package.json and the initialize response", async () => {
+  const serverJson = JSON.parse(readFileSync(new URL("../server.json", import.meta.url), "utf8"));
+  for (const key of ["$schema", "name", "description", "version", "packages"]) {
+    assert.ok(Object.hasOwn(serverJson, key), `server.json has ${key}`);
+  }
+  assert.match(serverJson.$schema, /^https:\/\/static\.modelcontextprotocol\.io\/schemas\/\d{4}-\d{2}-\d{2}\/server\.schema\.json$/);
+  assert.equal(pkg.mcpName, serverJson.name, "package.json mcpName equals server.json name");
+  assert.match(serverJson.name, /^io\.github\.allswapio\/[a-zA-Z0-9._-]+$/);
+  assert.equal(typeof serverJson.description, "string");
+  assert.ok(serverJson.description.length >= 1 && serverJson.description.length <= 100, `description is ${serverJson.description.length} characters`);
+
+  assert.equal(serverJson.packages.length, 1);
+  const [npmPackage] = serverJson.packages;
+  assert.equal(npmPackage.registryType, "npm");
+  assert.equal(npmPackage.identifier, pkg.name);
+  assert.equal(npmPackage.runtimeHint, "npx");
+  assert.deepEqual(npmPackage.transport, { type: "stdio" });
+
+  const init = await catalogHandler()({ jsonrpc: "2.0", id: 1, method: "initialize", params: {} });
+  const versions = {
+    "package.json": pkg.version,
+    "server.json version": serverJson.version,
+    "server.json packages[0].version": npmPackage.version,
+    "initialize serverInfo.version": init.result.serverInfo.version,
+  };
+  assert.equal(new Set(Object.values(versions)).size, 1, JSON.stringify(versions));
+  assert.match(pkg.version, /^\d+\.\d+\.\d+$/);
+
+  // server.json is registry metadata only; it is not shipped in the npm package.
+  assert.ok(!pkg.files.includes("server.json"));
+});
+
 test("ping and tools/list", async () => {
   const handle = catalogHandler();
   assert.deepEqual(await handle({ jsonrpc: "2.0", id: "p", method: "ping" }), { jsonrpc: "2.0", id: "p", result: {} });

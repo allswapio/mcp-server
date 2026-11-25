@@ -26,6 +26,9 @@ or credentials. All three tools carry the annotation `readOnlyHint: true`; only 
 }
 ```
 
+MCP Registry name: `io.github.allswapio/mcp-server` (the `mcpName` in `package.json`; the registry metadata
+is in `server.json` in the repository).
+
 The command installed by the package is `allswap-mcp`. The environment variable `ALLSWAP_API_ORIGIN`
 changes the origin used by `list_supported_assets` (default `https://allswap.io`). It must be an `http:` or
 `https:` origin with no path, query or credentials (for example `https://allswap.io`); otherwise the command
@@ -42,6 +45,18 @@ printf '%s\n' \
 
 The second reply contains
 `"explorerUrl": "https://mempool.space/tx/4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"`.
+
+### Run in a container
+
+No container image is published. To run the server in a container, build it yourself from this repository
+(the `Dockerfile` is in the repository, not in the npm package):
+
+```sh
+docker build -t allswap-mcp .
+```
+
+Then use `"command": "docker"` with `"args": ["run", "--rm", "-i", "allswap-mcp"]` in the client configuration
+above. The image runs as a non-root user and needs outbound HTTPS only for `list_supported_assets`.
 
 ## Tools
 

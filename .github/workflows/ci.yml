@@ -25,3 +25,43 @@ jobs:
           package-manager-cache: false
       - run: npm test
       - run: npm pack --dry-run
+
+  # Builds the container image from the Dockerfile and checks that it answers
+  # initialize and tools/list over stdio. Runs once, independent of the Node
+  # matrix above; the image is not pushed anywhere.
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Build the image
+        run: docker build --tag allswap-mcp:ci .
+      - name: The image runs as a non-root user
+        run: |
+          uid="$(docker run --rm --entrypoint id allswap-mcp:ci -u)"
+          echo "uid=${uid}"
+          test "${uid}" != "0"
+      - name: Smoke test over stdio (initialize, tools/list), without network
+        run: |
+          set -euo pipefail
+          printf '%s\n' \
+            '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18"}}' \
+            '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' \
+            | timeout 60 docker run --rm -i --network none allswap-mcp:ci > replies.jsonl
+          cat replies.jsonl
+          node -e '
+            const fs = require("fs");
+            const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            const replies = fs.readFileSync("replies.jsonl", "utf8").trim().split("\n").map((line) => JSON.parse(line));
+            const byId = new Map(replies.map((reply) => [reply.id, reply]));
+            const assert = require("assert");
+            assert.strictEqual(replies.length, 2);
+            assert.deepStrictEqual(byId.get(1).result.serverInfo, { name: pkg.name, version: pkg.version });
+            assert.strictEqual(byId.get(1).result.protocolVersion, "2025-06-18");
+            assert.deepStrictEqual(
+              byId.get(2).result.tools.map((tool) => tool.name),
+              ["list_supported_assets", "get_official_channels", "get_tx_explorer_url"],
+            );
+            console.log("image smoke test passed");
+          '

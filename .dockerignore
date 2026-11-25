@@ -1,0 +1,6 @@
+# Send only what the image needs to the build context.
+*
+!package.json
+!LICENSE
+!bin
+!src

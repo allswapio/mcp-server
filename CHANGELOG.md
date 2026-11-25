@@ -4,6 +4,21 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.0.1] - 2026-11-25
+
+No change to the tools, the protocol handling or the runtime requirements.
+
+### Added
+
+- `mcpName` (`io.github.allswapio/mcp-server`) in `package.json`, the name used for the official MCP Registry.
+- README: the MCP Registry name, and how to build and run a container image yourself from the repository.
+- README: a contact for license inquiries.
+
+### Changed
+
+- `bin` in `package.json` is written the way npm normalises it (`bin/allswap-mcp.mjs`); the installed
+  `allswap-mcp` command is the same.
+
 ## [1.0.0] - 2026-11-25
 
 First public release.
@@ -19,4 +34,5 @@ First public release.
 - `ALLSWAP_API_ORIGIN` / `apiOrigin` must be an `http:` or `https:` origin.
 - Requires Node.js 22 or later.
 
+[1.0.1]: https://github.com/allswapio/mcp-server/releases/tag/v1.0.1
 [1.0.0]: https://github.com/allswapio/mcp-server/releases/tag/v1.0.0

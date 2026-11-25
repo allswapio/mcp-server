@@ -1,13 +1,15 @@
 // Zero-dependency, read-only MCP server (JSON-RPC 2.0) with three tools:
 // list_supported_assets, get_official_channels, get_tx_explorer_url.
 
-// The npm package name. This is the only copy in the source; tests compare it
-// with package.json through the initialize response.
+// The npm package name and version. These are the only copies in the source;
+// tests compare them with package.json and server.json through the initialize
+// response, so a release that bumps one without the others fails the tests.
 const PACKAGE_NAME = "@allswapio/mcp-server";
+const PACKAGE_VERSION = "1.0.1";
 
 const SERVER_INFO = Object.freeze({
   name: PACKAGE_NAME,
-  version: "1.0.0",
+  version: PACKAGE_VERSION,
 });
 
 // Protocol revisions this server answers with. A client that asks for one of
