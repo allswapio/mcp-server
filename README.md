@@ -1,5 +1,7 @@
 # @allswapio/mcp-server
 
+[![allswapio/mcp-server MCP server](https://glama.ai/mcp/servers/allswapio/mcp-server/badges/score.svg)](https://glama.ai/mcp/servers/allswapio/mcp-server)
+
 A read-only [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server for
 [AllSwap](https://allswap.io). It speaks JSON-RPC 2.0 over stdio and offers three tools:
 
